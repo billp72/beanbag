@@ -6,14 +6,14 @@
         id        = "co.groupmesh.www"
         version   = "1.0.0">
 
-    <name>groupMesh</name>
+    <name>beanbag</name>
 
     <description>
-       groupMesh - connecting the education world.
+       beanbag - connecting the education world.
     </description>
 
     <author href="http://phonegap.com" email="support@phonegap.com">
-        groupMesh Team
+        beanbag Team
     </author>
 
     <!--

@@ -4,7 +4,7 @@
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "com.mybeanbagapp.beanbag"
-        version   = "1.0.0">
+        version   = "1.0.1">
 
     <name>beanbag</name>
 
@@ -41,7 +41,7 @@
     <preference name="SplashScreenDelay"          value="3000" />
     <preference name="phonegap-version"           value="cli-5.2.0" />
     <!-- ios overlay not on start up-->
-    <preference name="StatusBarOverlaysWebView" value="false" />
+    <!--<preference name="StatusBarOverlaysWebView" value="false" />-->
     
 
     <!-- Plugins -->
@@ -66,7 +66,7 @@
     <gap:plugin name="org.apache.cordova.vibration" source="npm" />
     <gap:plugin name="cordova-plugin-whitelist" source="npm" />
     <!-- ios plugin to hide or change status bar-->
-    <gap:plugin name="cordova-plugin-statusbar" source="npm" />
+    <!--<gap:plugin name="cordova-plugin-statusbar" source="npm" />-->
 
     <!-- Third party plugins -->
     <!-- A list of available plugins are available at https://build.phonegap.com/plugins -->

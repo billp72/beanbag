@@ -238,7 +238,7 @@ angular.module('mychat.controllers', [])
                         ref.child("users").child(authData.uid+'/user').once('value', function (snapshot) {
                             var val = snapshot.val();
                             //get and store gavitar image inside authData  - https://en.gravatar.com/
-                            var group              = !!val.groupID ? {'groupID':val.groupID, 'groupName':val.groupName} : {'groupID': 'gen', 'groupName':'Whatever??'};
+                            var group              = !!val.groupID ? {'groupID':val.groupID, 'groupName':val.groupName} : {'groupID': 'gen', 'groupName':'Whatever'};
                             $rootScope.email       = val.schoolEmail;
                             $rootScope.schoolID    = val.schoolID;
                             $rootScope.group       = group;

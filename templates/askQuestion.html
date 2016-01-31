@@ -1,6 +1,6 @@
-<ion-view view-title="Start a group - {{user.question.amount}} of 100">
+<ion-view view-title="Start a beanbag - {{user.question.amount}} of 100">
     <ion-header-bar class="bar bar-header bar-positive custom-color-blue">
-        <h1 class="title">Create group</h1>
+        <h1 class="title">Create beanbag</h1>
         <button class="button button-clear button-primary" ng-click="modal1.hide()">Cancel</button>
     </ion-header-bar>
     <ion-content class="padding">
@@ -46,6 +46,6 @@
                 <textarea my-maxlength="120" row="0" name="comment" id="comment-textarea" class="no-resize" ng-model="user.question" placeHolder="Describe your group: min of 15 characters max 100"></textarea>
             </label>
         </div>
-        <button ng-disabled="disable" class="button button-full button-positive custom-color-blue" ng-click="ask(user)">Add Group</button>
+        <button ng-disabled="disable" class="button button-full button-positive custom-color-blue" ng-click="ask(user)">Add bag</button>
     </ion-content>
 </ion-view>

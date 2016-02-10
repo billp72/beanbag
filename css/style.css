@@ -1,3 +1,7 @@
+input, textarea {
+    -webkit-user-select: auto;
+}
+
 .logo {
     display: block;
     position: relative;

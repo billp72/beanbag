@@ -17,7 +17,7 @@ angular.module('mychat.services', ['firebase'])
     var processEmailRequest = function (data){
         $http({
             method: 'POST',
-            url: 'http://www.beanbagapp.com/beanbag/emailToApplicant.php', 
+            url: 'http://www.beanbagapp.com/beanbag/'+data.URL, 
             data: data
         })
         .success(function(data, status, headers, config)
@@ -78,6 +78,14 @@ angular.module('mychat.services', ['firebase'])
         selectRoom: function (schoolID, questionID, groupID) {
             selectedRoomID = schoolID;
             chats = $firebase(ref.child(schoolID).child('questions').child(groupID).child(questionID).child('conversations')).$asArray();  
+        },
+        flagContent: function(params){
+            processEmailRequest({
+                'schoolID': params.schoolID, 
+                'publicQuestionKey': params.publicQuestionKey,
+                'groupDesc': params.groupDesc,
+                'URL': 'flagContent.php'
+            })
         },
         send: function (params) {
        
@@ -146,7 +154,7 @@ angular.module('mychat.services', ['firebase'])
                    if(error){
                        console.log('failer '+ error)
                     }else{
-                        processEmailRequest({'email': params.email, 'reason': params.message, 'groupName': params.groupName});
+                        processEmailRequest({'email': params.email, 'reason': params.message, 'groupName': params.groupName, URL: 'emailToApplicant.php'});
                         cb(false);
                     }
                                                                     

@@ -25,6 +25,7 @@
                 <ion-option-button ng-show="unjoin1" class="button-assertive" ng-click="wrap('unjoin-group')">
                     unjoin
                 </ion-option-button>
+                <div ng-show="flagContent" class="flag"><img ng-click="flag()" src="img/flag.png"></div>
             </ion-item>
             <ion-item ng-if="chats.length == 0" class="textCenter">
                 <h4>No messages in this room. Send message to start.</h4>

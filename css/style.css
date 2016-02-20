@@ -19,6 +19,14 @@ input, textarea {
     #6B6B6B
     #80c28d
 }*/
+.flag {
+    float: right;
+    margin: 13px;
+    padding: 2px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
 .custom-color-blue {
     background: #848A96 !important;
     border:none;

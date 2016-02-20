@@ -459,7 +459,8 @@ settings cntrl
                     '$ionicModal', 
                     '$ionicLoading', 
                     '$ionicScrollDelegate', 
-                    '$timeout', 
+                    '$timeout',
+                    '$ionicPopup',
                     'RequestsService', 
         function ($scope, 
                   PublicChat, 
@@ -469,7 +470,8 @@ settings cntrl
                   $ionicModal, 
                   $ionicLoading, 
                   $ionicScrollDelegate, 
-                  $timeout, 
+                  $timeout,
+                  $ionicPopup,  
                   RequestsService) {
 
     var 
@@ -493,6 +495,8 @@ settings cntrl
     $scope.IM = {
         textMessage: ""
     };
+    $scope.flagContent = true;
+
     if(wrap == ''){
         $scope.wrap1 =   false;
         $scope.unjoin1 = false;
@@ -522,6 +526,31 @@ settings cntrl
 
     PublicChat.selectRoom($scope.schoolID, publicQuestionKey, groupID);
 
+    $scope.flag = function(){   
+        alertPopup = $ionicPopup.alert({
+                title: 'Flag Content!',
+                template: '<b>Flag as inappropriate</b>',
+                buttons:[
+                    {text: 'Cancel'},
+                    {
+                     text: 'Flag',
+                     type: 'button-positive',
+                     onTap: function(){
+
+                            PublicChat.flagContent({ 
+                                schoolID: $scope.schoolID, 
+                                publicQuestionKey: publicQuestionKey,  
+                                groupDesc: $scope.question
+                            });
+                        }
+                    }
+
+                ]
+            });
+                
+                
+        
+    }
  
     $scope.sendMessage = function (msg) {
         
@@ -645,8 +674,8 @@ settings cntrl
                     '$ionicModal', 
                     '$ionicLoading', 
                     '$ionicScrollDelegate', 
-                    '$timeout', 
-                    'RequestsService', 
+                    '$timeout',
+                    'RequestsService',
         function ($scope, 
                   PublicChat, 
                   Users,
@@ -655,7 +684,7 @@ settings cntrl
                   $ionicModal, 
                   $ionicLoading, 
                   $ionicScrollDelegate, 
-                  $timeout, 
+                  $timeout,
                   RequestsService) {
 
             $ionicLoading.show();
@@ -678,6 +707,7 @@ settings cntrl
         $scope.unjoin1   = true;
         $scope.wrap1     = false;
     }
+    $scope.flagContent = false;
 
     if(!$scope.schoolID){
         $scope.schoolID = Users.getIDS('schoolID');

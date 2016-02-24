@@ -17,7 +17,7 @@ angular.module('mychat.services', ['firebase'])
     var processEmailRequest = function (data){
         $http({
             method: 'POST',
-            url: 'http://www.beanbagapp.com/beanbag/'+data.URL, 
+            url: 'http://www.netcreative.org/beanbag/'+data.URL, 
             data: data
         })
         .success(function(data, status, headers, config)
@@ -81,7 +81,8 @@ angular.module('mychat.services', ['firebase'])
         },
         flagContent: function(params){
             processEmailRequest({
-                'schoolID': params.schoolID, 
+                'schoolID': params.schoolID,
+                'email': params.email, 
                 'publicQuestionKey': params.publicQuestionKey,
                 'groupDesc': params.groupDesc,
                 'URL': 'flagContent.php'

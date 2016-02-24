@@ -540,7 +540,8 @@ settings cntrl
                             PublicChat.flagContent({ 
                                 schoolID: $scope.schoolID, 
                                 publicQuestionKey: publicQuestionKey,  
-                                groupDesc: $scope.question
+                                groupDesc: $scope.question,
+                                email: $scope.email
                             });
                         }
                     }

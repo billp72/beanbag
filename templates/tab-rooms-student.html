@@ -1,4 +1,4 @@
-<ion-view view-title="Groups for {{title1}}">
+<ion-view view-title="Beanbags for {{title1}}">
 <ion-nav-title>
            Beanbags for {{title1}}
         </ion-nav-title>
@@ -8,7 +8,7 @@
            <select ng-model="user.group" ng-options="select.groupName for select in data.list" ng-change="update(user.group)">
                 </select>
            </div>
-            <ion-item class="item-icon-left opaque" ng-repeat="room in rooms | reverse:room.total:room.limit" type="item-text-wrap" ng-click="openChatRoom(room.question, room.$id, room.groupID, room.organizerUserID, room.displayName, room.avatar, room.total, room.limit)">
+            <ion-item class="item-icon-left opaque" ng-repeat="room in rooms | reverse:room.total:room.limit" type="item-text-wrap" ng-click="openChatRoom(room.question, room.$id, room.groupID, room.organizerUserID, room.displayName, room.avatar, room.total, room.limit, room.email)">
                 <i class="icon {{room.icon}}"></i>
                 <h2>{{room.question}}</h2>
                 <h4 class="displayname" ng-show="room.total < room.limit"><span>allow {{room.limit - room.total}} | limit {{room.limit}} |</span> {{room.displayName}}</h4>

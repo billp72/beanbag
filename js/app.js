@@ -205,7 +205,7 @@ function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
         }
     })
         .state('menu.tab.chat', {
-        url: '/chat/:publicQuestionKey/:groupName/:question/:group/:displayName/:wrap/:avatar',
+        url: '/chat/:publicQuestionKey/:groupName/:question/:group/:displayName/:wrap/:avatar/:creatorEmail',
         cache: false,
         views: {
             'tab-chat': {

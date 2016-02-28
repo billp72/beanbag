@@ -481,6 +481,7 @@ settings cntrl
         groupName           = $state.params.groupName,
         wrap                = $state.params.wrap,
         avatar              = $state.params.avatar,
+        creatorEmail        = $state.params.creatorEmail,
         txtInput;
 
     if(!$scope.schoolID){
@@ -529,7 +530,7 @@ settings cntrl
     $scope.flag = function(){   
         alertPopup = $ionicPopup.alert({
                 title: 'Flag Content!',
-                template: '<b>Flag as inappropriate</b>',
+                template: '<b>Flag as inappropriate or spam</b>',
                 buttons:[
                     {text: 'Cancel'},
                     {
@@ -538,10 +539,11 @@ settings cntrl
                      onTap: function(){
 
                             PublicChat.flagContent({ 
-                                schoolID: $scope.schoolID, 
+                                schoolID: $scope.schoolID,
+                                category: groupID,
                                 publicQuestionKey: publicQuestionKey,  
                                 groupDesc: $scope.question,
-                                email: $scope.email
+                                email: creatorEmail
                             });
                         }
                     }
@@ -1034,7 +1036,7 @@ settings cntrl
         var group = {'groupID':$scope.groupID, 'groupName':$scope.title1}
 
         Users.storeIDS(group, 'group');
-        console.log($scope.location.latitude);
+    
         Rooms.getSchoolBySchoolID($scope.schoolID, $scope.groupID, $scope.location.latitude, $scope.location.longitude, function(datap){
             if($scope.schoolID === 'gencom'){
                     $scope.rooms = datap;
@@ -1051,7 +1053,7 @@ settings cntrl
 
     });
    
-    $scope.openChatRoom = function (question, publicQuestionKey, groupID, organizerUserID, displayName, avatar, total, limit) {
+    $scope.openChatRoom = function (question, publicQuestionKey, groupID, organizerUserID, displayName, avatar, total, limit, email) {
       if(total < limit){
        Rooms.getEjected({
              userID: $scope.userID,
@@ -1068,7 +1070,8 @@ settings cntrl
                         group: $scope.groupID,
                         displayName: displayName,
                         wrap: '',//hides ability to wrap question
-                        avatar: avatar
+                        avatar: avatar,
+                        creatorEmail: email
                     },{reload: true, inherit: true, notify: true });
                 
             }else{

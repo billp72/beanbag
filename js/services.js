@@ -82,6 +82,7 @@ angular.module('mychat.services', ['firebase'])
         flagContent: function(params){
             processEmailRequest({
                 'schoolID': params.schoolID,
+                'category': params.category,
                 'email': params.email, 
                 'publicQuestionKey': params.publicQuestionKey,
                 'groupDesc': params.groupDesc,

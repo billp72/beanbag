@@ -108,7 +108,7 @@
     <gap:splash src="res/screen/ios/drawable-land-mdpi.png"      gap:platform="ios"     width="1024" height="768" />
 
     <gap:config-file platform="ios" parent="CFBundleShortVersionString">
-    <string>100</string>
+    <string>101</string>
     </gap:config-file>
 
     <!--

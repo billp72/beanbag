@@ -115,7 +115,80 @@ angular.module('mychat.controllers', [])
             }
         });
     }
- 
+    $scope.createUser = function (user) {
+        if (
+            !!user && 
+            !!user.schoolemail &&
+            !!user.displayname.value
+             ) 
+        {
+        
+           $ionicLoading.show({
+                template: 'Signing Up...'
+            });
+         
+                auth.$createUser({
+                    email: user.schoolemail,
+                    password: stripDot.generatePass()
+                }).then(function (userData) {
+                    alert("User created successfully!");
+                    ref.child("users").child(userData.uid).set({
+                        user:{
+                            displayName: user.displayname.value,
+                            schoolID: 'gencom',
+                            schoolEmail: user.schoolemail
+                        }
+                    });
+                    $ionicLoading.hide();
+                    $scope.modal1.hide();
+                    $scope.modal1.remove();
+                }).then(function(userData){
+
+                    var school = Rooms.checkSchoolExist('gencom');
+                    school.$loaded(function(data){
+                        //if the school doesn't exist already, add it
+                        if(data.length <= 0){
+                            var room = ref.child("schools").child('gencom');
+                            room.set({
+                                icon: "ion-university",
+                                schoolname: '',
+                                schoolID: 'gencom',
+                                schoolEmail: user.schoolID.schoolContact,
+                                ID: room.key()
+                            },function(err){
+                                if(err) throw err;
+
+                            })
+                        }
+                    });
+                }).then(function(){
+                   ref.resetPassword({
+                        email: user.schoolemail
+                    }, function(error) {
+                        if (error) {
+                            switch (error.code) {
+                                case "INVALID_USER":
+                                    alert("The specified user account does not exist.");
+                                    break;
+                                default:
+                                    alert("Error:" + error);
+                            }
+                        } else {
+                            alert("An email to your student account has been sent!");
+                            $ionicLoading.hide();
+                            $state.go('login');
+                        }
+                    });
+                })  
+                .catch(function (error) {
+                    alert("Error: " + error);
+                    $ionicLoading.hide();
+                });
+            
+        }else{
+            alert("Please fill all details properly");
+        }
+    }
     $scope.createStudent = function (user) {
         if (
             !!user && 
@@ -137,7 +210,7 @@ angular.module('mychat.controllers', [])
                     alert("User created successfully!");
                     ref.child("users").child(userData.uid).set({
                         user:{
-                            displayName: user.displayname.value +'-'+ stripDot.shortRandom(),
+                            displayName: user.displayname.value,
                             schoolID: stripDot.strip(user.schoolID.domain),
                             schoolEmail: user.schoolemail
                         }

@@ -131,7 +131,7 @@ angular.module('mychat.controllers', [])
                     email: user.schoolemail,
                     password: stripDot.generatePass()
                 }).then(function (userData) {
-                    alert("User created successfully!");
+                
                     ref.child("users").child(userData.uid).set({
                         user:{
                             displayName: user.displayname.value,
@@ -207,7 +207,7 @@ angular.module('mychat.controllers', [])
                     email: user.schoolemail,
                     password: stripDot.generatePass()
                 }).then(function (userData) {
-                    alert("User created successfully!");
+                
                     ref.child("users").child(userData.uid).set({
                         user:{
                             displayName: user.displayname.value,

@@ -9,7 +9,7 @@
         <div class="list">
             <label class="item item-input">
                 <i class="icon ion-search placeholder-icon"></i>
-                <input type="search" placeholder="contact name" ng-model="contact">
+                <input type="search" placeholder="search contact by name" ng-model="contact">
             </label>
             <button ng-click="searchContactByName(contact)" class="button button-full button-positive custom-color-blue-send">
                     find
@@ -31,9 +31,9 @@
         </ion-item>
     </ion-content>
     <ion-footer-bar ui-view="footer">
-    <button class="button button-clear button-primary custom-color-blue" ng-click="modal.hide()">Cancel</button>
-    <button class="button button-clear button-primary" ng-click="envite()">
-        Envite
+    <button class="button button-clear button-positive custom-color-blue-send" ng-click="modal.hide()">Close</button>
+    <button class="button button-clear button-primary" ng-click="invite()">
+        Invite
     </button>
 </ion-footer-bar>
 </ion-modal-view>

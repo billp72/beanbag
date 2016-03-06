@@ -333,7 +333,7 @@ angular.module('mychat.services', ['firebase'])
                    
                     referrence.child(key).once('value', function(snapshot){
                             var obj = snapshot.val()
-                            obj.$id = snapshot.name();
+                            obj.$id = snapshot.key();
                             groupArr.push(obj);
                     });
                  
@@ -495,7 +495,7 @@ angular.module('mychat.services', ['firebase'])
 /**
  * simple service to get all the users for a room or in the db
 */
-.factory('Users', ['$firebase', '$q','$timeout', '$window', 'Rooms', 'RequestsService', 'stripDot', function ($firebase, $q, $timeout, $window, Rooms, RequestsService, stripDot) {
+.factory('Users', ['$firebase', '$q','$timeout', '$window', 'Rooms', 'RequestsService', 'stripDot', '$http', function ($firebase, $q, $timeout, $window, Rooms, RequestsService, stripDot, $http) {
     // Might use a resource here that returns a JSON array
     var ref = new Firebase(firebaseUrl+'/users');
     var users = $firebase(ref).$asArray();
@@ -553,6 +553,21 @@ angular.module('mychat.services', ['firebase'])
         toggleQuestionBackAfterClick: function (toggleUserID, toggleQuestionID){
              ref.child(toggleUserID).child('questions').child(toggleQuestionID)
                         .update({'conversationStarted':false});
+       },
+        inviteFromContacts: function (params){
+            $http({
+            method: 'POST',
+            url: 'http://www.netcreative.org/beanbag/inviteContact.php', 
+            data: params
+            })
+            .success(function(data, status, headers, config)
+            {
+                console.log(status + ' - ' + data);
+            })
+            .error(function(data, status, headers, config)
+            {
+                console.log('error');
+            });
        }
     }
 }])

@@ -19,6 +19,14 @@ input, textarea {
     #6B6B6B
     #80c28d
 }*/
+.contactList{
+    display: inline-block;
+    font-size: 0.8em;
+    padding: 5px;
+    margin:3px;
+    overflow: auto;
+    color: white;
+}
 .flag {
     float: right;
     margin: 13px;

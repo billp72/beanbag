@@ -1207,13 +1207,6 @@ settings cntrl
         }
     });
 
-    $ionicModal.fromTemplateUrl('templates/envite.html', {
-                        scope: $scope
-                    }).then(function (modal) {
-                        $scope.modal = modal;
-                        $scope.modal.show();
-                    });
-
     $scope.searchContactByName = function(name){
     
         Contacts.find(name, function (contacts){
@@ -1238,6 +1231,31 @@ settings cntrl
             }
         $scope.selectedItems = selectedContacts;
     }
+    $scope.invite = function(){
+        var values = [];
+        if($scope.selectedItems.length > 0){
+            angular.forEach($scope.selectedItems, function(contactEmail){
+                angular.forEach(contactEmail.emails, function(email){
+                    values.push(email.value);
+                })
+            
+            });
+            var len = values.length;
+            for(var i=0; i<len; i++){
+
+                Users.inviteFromContacts({
+                    'email':values[i],
+                    'groupDesc': $scope.groupDesc,
+                    'category':grpName,
+                    'schoolID': $scope.schoolID,
+                    'name':$scope.displayName
+                });
+            }
+            alert(len-1+' invites sent');
+        }else{
+            alert('select at least one contact');
+        }
+    }
     $scope.ask = function (quest){
           var params;
           key=''; 
@@ -1253,6 +1271,7 @@ settings cntrl
           
           grpID = quest.group.groupID;
           grpName = quest.group.groupName;
+          $scope.groupDesc = quest.question.value;
            
           $ionicLoading.show({
                 template: 'Sending...'
@@ -1303,7 +1322,14 @@ settings cntrl
                                 $state.transitionTo('menu.tab.conversations',{},{ reload: true, inherit: true, notify: true });
                                 $scope.data.search = '';
                                 $scope.user.question = '';
-                            })
+
+                                $ionicModal.fromTemplateUrl('templates/envite.html', {
+                                    scope: $scope
+                                }).then(function (modal) {
+                                    $scope.modal = modal;
+                                    $scope.modal.show();
+                                });
+                            });
                     });
                     /*if(grpID !== 'gen'){
                        var keys = Users.getGroupKeys().

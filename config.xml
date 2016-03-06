@@ -63,7 +63,7 @@
     <gap:plugin name="org.apache.cordova.network-information" source="npm" />
     <gap:plugin name="org.apache.cordova.splashscreen" source="npm" />
     <gap:plugin name="org.apache.cordova.vibration" source="npm" />
-    <gap:plugin name="org.apache.cordova.contacts" />
+    <gap:plugin name="org.apache.cordova.contacts" source="npm" />
     <gap:plugin name="cordova-plugin-whitelist" source="npm" />
     <!-- ios plugin to hide or change status bar-->
     <!--<gap:plugin name="cordova-plugin-statusbar" source="npm" />-->

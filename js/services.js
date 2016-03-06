@@ -332,7 +332,9 @@ angular.module('mychat.services', ['firebase'])
                     //console.log("Bicycle shop " + key + " found at " + location + " (" + distance + " km away)");
                    
                     referrence.child(key).once('value', function(snapshot){
-                            groupArr.push(snapshot.val());
+                            var obj = snapshot.val()
+                            obj.$id = snapshot.name();
+                            groupArr.push(obj);
                     });
                  
                 });

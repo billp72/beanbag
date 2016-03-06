@@ -1083,7 +1083,7 @@ settings cntrl
                 });
 
             });
-            console.log(Users.getIDS('location'));
+          
             $scope.location = Users.getIDS('location');
 
         }
@@ -1160,12 +1160,13 @@ settings cntrl
 /*the prospect can ask a question
 *
 */
-.controller('AskCtrl', ['$scope', '$state', 'Users', 'Rooms', 'orderAlphanumeric', 'stripDot', '$ionicLoading',
-    function ($scope, $state, Users, Rooms, orderAlphanumeric, stripDot, $ionicLoading){
+.controller('AskCtrl', ['$scope', '$state', 'Users', 'Rooms', 'orderAlphanumeric', 'stripDot', '$ionicLoading', '$ionicModal', 'Contacts',
+    function ($scope, $state, Users, Rooms, orderAlphanumeric, stripDot, $ionicLoading, $ionicModal, Contacts){
     var icon='',
         grpID,
         grpName,
-        status;
+        status,
+        selectedContacts=[];
     if(!$scope.userID){
         $scope.userID = Users.getIDS('userID');
     }
@@ -1201,9 +1202,42 @@ settings cntrl
                 });
 
             });
+            $scope.lat = Users.getIDS('location').latitude;
+            $scope.lon = Users.getIDS('location').longitude;
         }
     });
 
+    $ionicModal.fromTemplateUrl('templates/envite.html', {
+                        scope: $scope
+                    }).then(function (modal) {
+                        $scope.modal = modal;
+                        $scope.modal.show();
+                    });
+
+    $scope.searchContactByName = function(name){
+    
+        Contacts.find(name, function (contacts){
+                $scope.contacts = contacts;
+            },
+            function (contactError){
+                console.log(contactError +' error');
+            }
+        );
+    }
+
+    $scope.inviteList = function(name, emails, id, isChecked){
+
+            if(isChecked){
+                selectedContacts.push({'name':name, 'emails': emails, 'id':id})
+            }else{
+                for(var i=0; i<selectedContacts.length; i++){
+                    if(selectedContacts[i].id === id){
+                        selectedContacts.splice(i, 1);
+                    }
+                }
+            }
+        $scope.selectedItems = selectedContacts;
+    }
     $scope.ask = function (quest){
           var params;
           key=''; 

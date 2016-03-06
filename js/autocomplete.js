@@ -170,6 +170,23 @@ angular.module('mychat.autocomplete', ['firebase'])
         }
     }
 }])
+.factory('Contacts',[function (){
 
+    function findContact(name, onSuccess, onError){
+        var options           = new ContactFindOptions();
+            options.multiple      = true;
+            //options.desiredFields = [navigator.contacts.fieldType.emails];
+            //options.hasPhoneNumber = true;
+            options.filter        = name;
+        
+        var fields = [navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.emails];
+
+        navigator.contacts.find(fields, onSuccess, onError, options);
+    }
+
+    return {
+        find: findContact
+    }
+}]);
 
 

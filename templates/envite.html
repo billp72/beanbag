@@ -1,0 +1,39 @@
+<ion-modal-view>
+    <ion-header-bar class="bar bar-header bar-positive custom-color-blue">
+        <h1 class="title">Invite members</h1>
+    </ion-header-bar>
+    <ion-content class="padding">
+           <ul ng-repeat="select in selectedItems" class="contactList custom-color-blue-send">
+             <li>{{select.name}}</li>
+           </ul>  
+        <div class="list">
+            <label class="item item-input">
+                <i class="icon ion-search placeholder-icon"></i>
+                <input type="search" placeholder="contact name" ng-model="contact">
+            </label>
+            <button ng-click="searchContactByName(contact)" class="button button-full button-positive custom-color-blue-send">
+                    find
+                </button>
+        </div>
+        <ion-item ng-repeat="contact in contacts" type="item-text-wrap" ng-show="contact.displayName">
+            <ul class="list">
+
+                <li class="item item-toggle">
+                    <h2>{{contact.displayName}}</h2>
+                        <label class="toggle toggle-assertive">
+                            <input type="checkbox" ng-model="isChecked" ng-click="inviteList(contact.displayName, contact.emails, contact.id, isChecked)">
+                            <div class="track">
+                                <div class="handle"></div>
+                            </div>
+                        </label>
+                </li>
+            </ul>
+        </ion-item>
+    </ion-content>
+    <ion-footer-bar ui-view="footer">
+    <button class="button button-clear button-primary custom-color-blue" ng-click="modal.hide()">Cancel</button>
+    <button class="button button-clear button-primary" ng-click="envite()">
+        Envite
+    </button>
+</ion-footer-bar>
+</ion-modal-view>

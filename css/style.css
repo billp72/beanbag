@@ -41,6 +41,7 @@ input, textarea {
 }
 .custom-color-blue-send{
     background-color: #6daa79 !important;
+    border: none;
 }
 .tab-item.tab-item-active, .tab-item.active, .tab-item.activated {
     color: #848A96 !important;

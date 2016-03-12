@@ -296,6 +296,7 @@ angular.module('mychat.services', ['firebase'])
 .factory('Rooms', ['$firebase', '$q', '$timeout', function ($firebase, $q, $timeout) {
     // Might use a resource here that returns a JSON array
     var ref = new Firebase(firebaseUrl+'/schools');
+    var ref2 = new Firebase(firebaseUrl+'/institutions');
     var rooms = $firebase(ref).$asArray();
     var increment=0;
     var deferred = $q.defer();
@@ -353,6 +354,9 @@ angular.module('mychat.services', ['firebase'])
         },
         checkSchoolExist: function(schoolID){
             return $firebase(ref.child(schoolID).child('questions')).$asArray();
+        },
+        checkInstCode: function(key){
+            return $firebase(ref2.child(key)).$asArray();
         },
         addQuestionsToSchool: function(params, schoolID, lat, lon, cb){
         

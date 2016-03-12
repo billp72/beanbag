@@ -26,6 +26,23 @@ function onDeviceReady() {
 
     angular.bootstrap(document, ["mychat"]);
 
+     function onSuccess(contacts) {
+        console.log('Found ' + contacts.length + ' contacts.');
+        
+    };
+    //
+    function onError(contactError) {
+        alert('onError!');
+    };
+
+    // find all contacts with 'me' in any name field
+    var options      = new ContactFindOptions();
+        options.filter   = "";
+        options.multiple = false;
+        //options.desiredFields = [navigator.contacts.fieldType.id];
+        var fields       = [navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name];
+        navigator.contacts.find(fields, onSuccess, onError, options);
+
 }
 //console.log("binding device ready");
 // Registering onDeviceReady callback with deviceready event

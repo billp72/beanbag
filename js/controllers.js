@@ -115,6 +115,89 @@ angular.module('mychat.controllers', [])
             }
         });
     }
+    $scope.institutionalClient = function (user) {
+        if (
+            !!user && 
+            !!user.schoolemail &&
+            !!user.code &&
+            !!user.displayname.value
+             ) 
+        {
+
+        var code = Rooms.checkInstCode(user.code);
+        code.$loaded(function(data){
+        
+          if(data.length > 0){
+           $ionicLoading.show({
+                template: 'Signing Up...'
+            });
+         
+                auth.$createUser({
+                    email: user.schoolemail,
+                    password: stripDot.generatePass()
+                }).then(function (userData) {
+                
+                    ref.child("users").child(userData.uid).set({
+                        user:{
+                            displayName: user.displayname.value,
+                            schoolID: user.code,
+                            schoolEmail: user.schoolemail
+                        }
+                    });
+                    $ionicLoading.hide();
+                    $scope.modal1.hide();
+                    $scope.modal1.remove();
+                }).then(function(userData){
+
+                    var school = Rooms.checkSchoolExist(user.code);
+                    school.$loaded(function(data){
+                        console.log(data);
+                        //if the school doesn't exist already, add it
+                        if(data.length <= 0){
+                            var room = ref.child("schools").child(user.code);
+                            room.set({
+                                icon: "ion-university",
+                                schoolname: user.code,
+                                schoolID: user.code,
+                                ID: room.key(),
+                                primary: user.displayname.value + '-p1'
+                            },function(err){
+                                if(err) throw err;
+
+                            })
+                        }
+                    });
+                }).then(function(){
+                   ref.resetPassword({
+                        email: user.schoolemail
+                    }, function(error) {
+                        if (error) {
+                            switch (error.code) {
+                                case "INVALID_USER":
+                                    alert("The specified user account does not exist.");
+                                    break;
+                                default:
+                                    alert("Error:" + error);
+                            }
+                        } else {
+                            alert("An email to your student account has been sent!");
+                            $ionicLoading.hide();
+                            $state.go('login');
+                        }
+                    });
+                })  
+                .catch(function (error) {
+                    alert("Error: " + error);
+                    $ionicLoading.hide();
+                });
+             }else{
+                alert("The code you typed does not exist.");
+             }
+            });
+        }else{
+            alert("Please fill all details properly");
+        }
+    }
     $scope.createUser = function (user) {
         if (
             !!user && 
@@ -1208,16 +1291,24 @@ settings cntrl
     });
 
     $scope.searchContactByName = function(name){
-    
+
+        $ionicLoading.show({
+                template: 'Signing Up...'
+            });
+
         Contacts.find(name, function (contacts){
                 $scope.contacts = contacts;
+                if($scope.contacts.length){
+                    $ionicLoading.hide();
+                }
             },
             function (contactError){
                 console.log(contactError +' error');
+                $ionicLoading.hide();
             }
         );
     }
-
+ 
     $scope.inviteList = function(name, emails, id, isChecked){
 
             if(isChecked){

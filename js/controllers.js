@@ -234,9 +234,8 @@ angular.module('mychat.controllers', [])
                             var room = ref.child("schools").child('gencom');
                             room.set({
                                 icon: "ion-university",
-                                schoolname: '',
+                                schoolname: 'beanbag',
                                 schoolID: 'gencom',
-                                schoolEmail: user.schoolID.schoolContact,
                                 ID: room.key()
                             },function(err){
                                 if(err) throw err;

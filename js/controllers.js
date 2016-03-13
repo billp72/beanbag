@@ -1292,14 +1292,12 @@ settings cntrl
     $scope.searchContactByName = function(name){
 
         $ionicLoading.show({
-                template: 'Signing Up...'
+                template: 'Searching...'
             });
 
         Contacts.find(name, function (contacts){
                 $scope.contacts = contacts;
-                if($scope.contacts.length){
-                    $ionicLoading.hide();
-                }
+                 $ionicLoading.hide();
             },
             function (contactError){
                 console.log(contactError +' error');

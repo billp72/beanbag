@@ -151,7 +151,6 @@ angular.module('mychat.controllers', [])
 
                     var school = Rooms.checkSchoolExist(user.code);
                     school.$loaded(function(data){
-                        console.log(data);
                         //if the school doesn't exist already, add it
                         if(data.length <= 0){
                             var room = ref.child("schools").child(user.code);
@@ -180,9 +179,11 @@ angular.module('mychat.controllers', [])
                                     alert("Error:" + error);
                             }
                         } else {
-                            alert("An email to your student account has been sent!");
+                            alert("An email to your account has been sent!");
                             $ionicLoading.hide();
-                            $state.go('login');
+                            
+                            $scope.user = {};
+                            $scope.user.displayname = '';
                         }
                     });
                 })  
@@ -256,9 +257,11 @@ angular.module('mychat.controllers', [])
                                     alert("Error:" + error);
                             }
                         } else {
-                            alert("An email to your student account has been sent!");
+                            alert("An email to your account has been sent!");
                             $ionicLoading.hide();
-                            $state.go('login');
+
+                            $scope.user = {};
+                            $scope.user.displayname = '';
                         }
                     });
                 })  
@@ -335,7 +338,9 @@ angular.module('mychat.controllers', [])
                         } else {
                             alert("An email to your student account has been sent!");
                             $ionicLoading.hide();
-                            $state.go('login');
+
+                            $scope.user = {};
+                            $scope.user.displayname = '';
                         }
                     });
                 })  
@@ -1321,13 +1326,14 @@ settings cntrl
     }
     $scope.invite = function(){
         var values = [];
-        if($scope.selectedItems.length > 0){
+        if($scope.selectedItems.length >= 0){
             angular.forEach($scope.selectedItems, function(contactEmail){
                 angular.forEach(contactEmail.emails, function(email){
                     values.push(email.value);
                 })
             
             });
+
             var len = values.length;
             for(var i=0; i<len; i++){
 
@@ -1339,7 +1345,14 @@ settings cntrl
                     'name':$scope.displayName
                 });
             }
-            alert(len-1+' invites sent');
+            if($scope.contacts.length){
+                $scope.contacts.length = 0;
+            }else{
+                $scope.contacts = null;
+            }
+            selectedContacts.length = 0;
+            values.length = 0;
+            alert(len+' invites sent');
         }else{
             alert('select at least one contact');
         }

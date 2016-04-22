@@ -904,8 +904,22 @@ settings cntrl
         return typeof obj === 'string';
     }
     $scope.avatar   = $state.params.avatar;
-    $scope.question = $state.params.question;
 
+    if($state.params.question.length > 200) {
+        $scope.question = $state.params.question.substr(0, 200) + '...';
+    }else{
+        $scope.question = $state.params.question;
+    }
+    $scope.description = function(){
+        $scope.desc = $state.params.question;
+        $ionicModal.fromTemplateUrl('templates/description.html', {
+            scope: $scope
+        }).then(function (modal) {
+            $scope.modal1 = modal;
+            $scope.modal1.show();
+        });
+
+    }
     PublicChat.selectRoom($scope.schoolID, publicQuestionKey, group);
 
     PublicChat.getSelectedRoomName(function(roomName){
@@ -927,26 +941,41 @@ settings cntrl
             },true);
         }
     });
+    $scope.editing = {};
 
     $scope.edit = function (){
-        $scope.editorEnabled = true;
+        $scope.editing.question = $state.params.question;
+        $ionicModal.fromTemplateUrl('templates/edit.html', {
+            scope: $scope
+        }).then(function (modal) {
+            $scope.modal1 = modal;
+            $scope.modal1.show();
+        });
     }
     
     $scope.saveEdit = function (question){
-        if(question.amount <= 14){
+
+        if(question.question.value.length > 200) {
+            $scope.question = question.question.value.substr(0, 200) + '...';
+        }else{
+            $scope.question = question.question.value;
+        }
+
+        if(question.question.amount <= 14){
             alert('must be at least 15 characters');
 
             return;
         }
+    
         PublicChat.editGroup({
-            'question': question.value,
+            'question': question.question.value,
             'schoolID': $scope.schoolID,
             'groupID': group,
             'userID': $scope.userID,
             'publicQuestionKey': publicQuestionKey,
             'userGroupKey': selfKey
         });
-        $scope.editorEnabled = false;
+     alert('description updated');
         
     }
 //removes a single chat message
@@ -1146,11 +1175,11 @@ settings cntrl
 .controller('EventsCtrl', ['$scope', 'Users', 'Rooms', '$state', '$window', 'orderAlphanumeric', '$ionicLoading',
     function ($scope, Users, Rooms, $state, $window, orderAlphanumeric, $ionicLoading) {
 
+     if(!$scope.userID){
+        $scope.userID = Users.getIDS('userID');
+    }
     if(!$scope.schoolID){
         $scope.schoolID = Users.getIDS('schoolID');
-    }
-    if(!$scope.userID){
-        $scope.userID = Users.getIDS('userID');
     }
     if(!$scope.group){
         $scope.group = Users.getIDS('group');

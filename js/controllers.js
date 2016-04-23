@@ -905,10 +905,13 @@ settings cntrl
     }
     $scope.avatar   = $state.params.avatar;
 
-    if($state.params.question.length > 200) {
-        $scope.question = $state.params.question.substr(0, 200) + '...';
+    if($state.params.question.length > 180) {
+
+        var whitespace = $state.params.question.replace(/^\s+|\s+$/gm,'');
+        
+        $scope.question = whitespace.substr(0, 180) + ' ...';
     }else{
-        $scope.question = $state.params.question;
+        $scope.question = $state.params.question.replace(/^\s+|\s+$/gm,'');
     }
     $scope.description = function(){
         $scope.desc = $state.params.question;
@@ -955,10 +958,13 @@ settings cntrl
     
     $scope.saveEdit = function (question){
 
-        if(question.question.value.length > 200) {
-            $scope.question = question.question.value.substr(0, 200) + '...';
+        if(question.question.value.length > 180) {
+
+            var whitespace =  question.question.value.replace(/^\s+|\s+$/gm,'');
+
+            $scope.question = whitespace.substr(0, 200) + '...';
         }else{
-            $scope.question = question.question.value;
+            $scope.question = question.question.value.replace(/^\s+|\s+$/gm,'');
         }
 
         if(question.question.amount <= 14){

@@ -7,7 +7,6 @@
             <ion-item class="special-text" style="background:#EFFAF2">
                 <div ng-click="description()" class="avatar"><img width="50" ng-src="{{avatar}}"></div>
                 <div ng-hide="editorEnabled">
-                    <pre ng-hide="typ(question)">{{question.value}}</pre>
                     <pre ng-show="typ(question)">{{question}}</pre>
                     <button ng-show="wrap1" style="display:block; margin-top:5px;" ng-click="edit()" class="button button-small button-balanced custom-color-blue">
                         Edit

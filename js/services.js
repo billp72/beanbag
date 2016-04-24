@@ -542,6 +542,9 @@ angular.module('mychat.services', ['firebase'])
         updateUserGroup: function (groupID, groupName, userID){
             ref.child(userID).child('user').update({'groupID': groupID, 'groupName': groupName});
         },
+        getFreshDescription: function (params){
+            return $firebase(ref.child(params.userID).child('questions').child(params.groupID)).$asObject();
+        },
         getIDS: function (key){
             return JSON.parse($window.localStorage.getItem(key));
         },

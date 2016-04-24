@@ -1,14 +1,16 @@
-<ion-view view-title="{{user.question.amount}} of 500">
+<ion-modal-view>
+ <ion-view view-title="Edit">
     <ion-header-bar class="bar bar-header bar-positive custom-color-blue">
         <h1 class="title">Edit beanbag</h1>
-        <button class="button button-clear button-primary" ng-click="modal1.hide()">Cancel</button>
+        <button class="button button-clear button-primary" ng-click="modal3.hide()">Cancel</button>
     </ion-header-bar>
     <ion-content class="padding">
-        <div class="list">         
+        <div class="list">       
             <label class="item item-input">
-                <textarea my-maxlength="500" row="0" style="height:500px" name="comment" id="comment-textarea" class="no-resize" ng-model="editing.question"></textarea>
+                <textarea my-maxlength="500" row="0" style="height:400px" name="comment" id="comment-textarea" class="no-resize" ng-model="editing.question"></textarea>
             </label>
         </div>
         <button ng-disabled="disable" class="button button-full button-positive custom-color-blue" ng-click="saveEdit(editing)">commit edits</button>
     </ion-content>
-</ion-view>
+ </ion-view>
+</ion-modal-view>

@@ -856,6 +856,7 @@ settings cntrl
         publicQuestionKey    = $state.params.publicQuestionKey,
         displayName          = $state.params.displayName,
         group                = $state.params.group,
+        groupID              = $state.params.groupID,
         groupName            = $state.params.groupName,
         wrap                 = $state.params.wrap,
         selfKey              = $state.params.selfKey,
@@ -914,14 +915,16 @@ settings cntrl
         $scope.question = $state.params.question.replace(/^\s+|\s+$/gm,'');
     }
     $scope.description = function(){
-        $scope.desc = $state.params.question;
+
+        Users.getFreshDescription({'userID':$scope.userID, 'groupID':selfKey}).$loaded(function(description){
+        $scope.desc = description.question;
         $ionicModal.fromTemplateUrl('templates/description.html', {
             scope: $scope
         }).then(function (modal) {
-            $scope.modal1 = modal;
-            $scope.modal1.show();
+            $scope.modal2 = modal;
+            $scope.modal2.show();
         });
-
+      });
     }
     PublicChat.selectRoom($scope.schoolID, publicQuestionKey, group);
 
@@ -947,13 +950,15 @@ settings cntrl
     $scope.editing = {};
 
     $scope.edit = function (){
-        $scope.editing.question = $state.params.question;
+        Users.getFreshDescription({'userID':$scope.userID, 'groupID':selfKey}).$loaded(function(description){
+        $scope.editing.question = description.question;
         $ionicModal.fromTemplateUrl('templates/edit.html', {
             scope: $scope
         }).then(function (modal) {
-            $scope.modal1 = modal;
-            $scope.modal1.show();
+            $scope.modal3 = modal;
+            $scope.modal3.show();
         });
+      });
     }
     
     $scope.saveEdit = function (question){

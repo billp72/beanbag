@@ -172,16 +172,17 @@ angular.module('mychat.autocomplete', ['firebase'])
 }])
 .factory('Contacts',[function (){
 
-    function findContact(name, onSuccess, onError){
+    function findContact(name, contactSuccess, contactError){
         var options           = new ContactFindOptions();
             options.multiple      = true;
             //options.desiredFields = [navigator.contacts.fieldType.emails];
             //options.hasPhoneNumber = true;
             options.filter        = name;
         
-        var fields = [navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.emails];
+        var fields = ["name","displayName","emails"];
 
-        navigator.contacts.find(fields, onSuccess, onError, options);
+        navigator.contacts.find(fields, contactSuccess, contactError, options);
+
     }
 
     return {

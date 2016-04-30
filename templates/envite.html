@@ -15,13 +15,13 @@
                     find
                 </button>
         </div>
-        <ion-item ng-repeat="contact in contacts" type="item-text-wrap" ng-show="contact.displayName">
+        <ion-item ng-repeat="contact in contacts" type="item-text-wrap" ng-show="contact.name.formatted">
             <ul class="list">
 
                 <li class="item item-toggle">
-                    <h2>{{contact.displayName}}</h2>
+                    <h2>{{contact.name.formatted}}</h2>
                         <label class="toggle toggle-assertive">
-                            <input type="checkbox" ng-model="isChecked" ng-click="inviteList(contact.displayName, contact.emails, contact.id, isChecked)">
+                            <input type="checkbox" ng-model="isChecked" ng-click="inviteList(contact.name.formatted, contact.emails, contact.id, isChecked)">
                             <div class="track">
                                 <div class="handle"></div>
                             </div>

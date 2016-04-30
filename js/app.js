@@ -26,12 +26,12 @@ function onDeviceReady() {
 
     angular.bootstrap(document, ["mychat"]);
 
-     function onSuccess(contacts) {
+     function contactSuccess(contacts) {
         console.log('Found ' + contacts.length + ' contacts.');
         
     };
     //
-    function onError(contactError) {
+    function contactError(contactError) {
         alert('onError!');
     };
 
@@ -40,8 +40,8 @@ function onDeviceReady() {
         options.filter   = "";
         options.multiple = false;
         //options.desiredFields = [navigator.contacts.fieldType.id];
-        var fields       = [navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name];
-        navigator.contacts.find(fields, onSuccess, onError, options);
+        var fields       = ["name","displayName","emails"];
+        navigator.contacts.find(fields, contactSuccess, contactError, options);
 
 }
 //console.log("binding device ready");

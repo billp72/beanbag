@@ -1345,7 +1345,7 @@ settings cntrl
                  $ionicLoading.hide();
             },
             function (contactError){
-                console.log(contactError +' error');
+                alert(contactError +' error');
                 $ionicLoading.hide();
             }
         );
@@ -1365,8 +1365,8 @@ settings cntrl
         $scope.selectedItems = selectedContacts;
     }
     $scope.invite = function(){
-        var values = [];
-        if($scope.selectedItems.length >= 0){
+        var values = [], len;
+        if($scope.selectedItems && $scope.selectedItems.length >= 0){
             angular.forEach($scope.selectedItems, function(contactEmail){
                 angular.forEach(contactEmail.emails, function(email){
                     values.push(email.value);
@@ -1374,7 +1374,7 @@ settings cntrl
             
             });
 
-            var len = values.length;
+            len = values.length;
             for(var i=0; i<len; i++){
 
                 Users.inviteFromContacts({
@@ -1390,9 +1390,12 @@ settings cntrl
             }else{
                 $scope.contacts = null;
             }
+
+            alert($scope.selectedItems.length+' invites sent');
+
             selectedContacts.length = 0;
             values.length = 0;
-            alert(len+' invites sent');
+            $scope.selectedItems.length = 0;
         }else{
             alert('select at least one contact');
         }

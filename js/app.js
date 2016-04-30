@@ -9,6 +9,20 @@ function onDeviceReady() {
         navigator.splashscreen.hide();
 
     }, 3000);
+    //geolocation callbacks
+    var onSuccess = function(position) {     
+            var location = {
+                    'latitude': position.coords.latitude,
+                    'longitude': position.coords.longitude
+            }
+        window.localStorage.setItem(location, JSON.stringify('location'));        
+    };
+
+    //onError Callback receives a PositionError object
+    function onError(error) {
+            alert('code: '    + error.code    + '\n' +
+                  'message: ' + error.message + '\n');
+    }
 
     /*Fixes a change in phonegap that forces FB into offline mode when minimized*/
     var ref = new Firebase(firebaseUrl+'/users');
@@ -22,6 +36,7 @@ function onDeviceReady() {
 
     function onResume(){
         Firebase.goOnline();
+        navigator.geolocation.getCurrentPosition(onSuccess, onError);
     } 
 
     angular.bootstrap(document, ["mychat"]);
@@ -32,7 +47,7 @@ function onDeviceReady() {
     };
     //
     function contactError(contactError) {
-        alert('onError!');
+        alert('Error! '+contactError);
     };
 
     // find all contacts with 'me' in any name field
@@ -65,22 +80,7 @@ angular.module('mychat', ['ionic', 'ngIOS9UIWebViewPatch', 'firebase', 'angularM
                 }, 2000);
             }
         });
-        var onSuccess = function(position) {
-               
-                var location = {
-                    'latitude': position.coords.latitude,
-                    'longitude': position.coords.longitude
-                }
-                Users.storeIDS(location,'location');
-                
-        };
-
-// onError Callback receives a PositionError object
-        function onError(error) {
-                alert('code: '    + error.code    + '\n' +
-                      'message: ' + error.message + '\n');
-        }
-        navigator.geolocation.getCurrentPosition(onSuccess, onError);
+        
         /*Google keys
          * key: AIzaSyAbXzuAUk1EICCdfpZhoA6-TleQrPWxJuI
          * Project Number: open-circles-1064/346007849782

@@ -1,7 +1,12 @@
 input, textarea {
     -webkit-user-select: auto !important;
 }
-
+.redOutline{
+    border: 2px solid red;
+}
+.greenOutline{
+    border: 2px solid green;
+}
 .logo {
     display: block;
     position: relative;

@@ -13,6 +13,7 @@ angular.module('mychat.controllers', [])
     'schoolFormDataService',
     'stripDot',
     'pushService',
+    '$ionicPopup',
     '$window',
     function (
     $scope, 
@@ -27,6 +28,7 @@ angular.module('mychat.controllers', [])
     schoolFormDataService,
     stripDot,
     pushService,
+    $ionicPopup,
     $window) {
     var ref = new Firebase($scope.firebaseUrl);
     var auth = $firebaseAuth(ref);
@@ -94,6 +96,16 @@ angular.module('mychat.controllers', [])
             $scope.modal2 = modal;
             $scope.modal2.show();
         });
+    }
+    $scope.checkPassword = function(user){
+        $scope.borderColor = $scope.user.password !== user.validPassword ? 'redOutline' : 'greenOutline';
+    }
+    $scope.checkLength = function(user){
+        if(user.password.length < 6){
+            alert('Your password needs to be six or more characters for security');
+
+            return;
+        }
     }
     $scope.forgotPassReset = function(enter){
         ref.resetPassword({
@@ -199,12 +211,14 @@ angular.module('mychat.controllers', [])
             alert("Please fill all details properly");
         }
     }
-    $scope.createUser = function (user) {
+     $scope.createUser = function (user) {
         if (
             !!user && 
             !!user.schoolemail &&
-            !!user.displayname.value
-             ) 
+            !!user.displayname.value &&
+            user.validPassword.length >= 6 &&
+            user.password === user.validPassword
+            ) 
         {
         
            $ionicLoading.show({
@@ -213,7 +227,7 @@ angular.module('mychat.controllers', [])
          
                 auth.$createUser({
                     email: user.schoolemail,
-                    password: stripDot.generatePass()
+                    password: user.validPassword
                 }).then(function (userData) {
                 
                     ref.child("users").child(userData.uid).set({
@@ -223,9 +237,7 @@ angular.module('mychat.controllers', [])
                             schoolEmail: user.schoolemail
                         }
                     });
-                    $ionicLoading.hide();
-                    $scope.modal1.hide();
-                    $scope.modal1.remove();
+                    
                 }).then(function(userData){
 
                     var school = Rooms.checkSchoolExist('gencom');
@@ -243,35 +255,25 @@ angular.module('mychat.controllers', [])
 
                             })
                         }
+                        $ionicPopup.alert({
+                            title: 'Account Created',
+                            template: 'You account has been created successfully.'
+                        });
                     });
-                }).then(function(){
-                   ref.resetPassword({
-                        email: user.schoolemail
-                    }, function(error) {
-                        if (error) {
-                            switch (error.code) {
-                                case "INVALID_USER":
-                                    alert("The specified user account does not exist.");
-                                    break;
-                                default:
-                                    alert("Error:" + error);
-                            }
-                        } else {
-                            alert("An email to your account has been sent!");
-                            $ionicLoading.hide();
-
-                            $scope.user = {};
-                            $scope.user.displayname = '';
-                        }
-                    });
-                })  
-                .catch(function (error) {
+                }).catch(function (error) {
                     alert("Error: " + error);
                     $ionicLoading.hide();
                 });
-            
+
+                $ionicLoading.hide();
+                $scope.user = {};
+                $scope.user.displayname = '';
+                 
         }else{
-            alert("Please fill all details properly");
+            $ionicPopup.alert({
+                title: 'Form fields',
+                template: 'Please fill all fields properly.'
+            });
         }
     }
     $scope.createStudent = function (user) {

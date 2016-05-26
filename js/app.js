@@ -20,9 +20,26 @@ function onDeviceReady() {
 
     //onError Callback receives a PositionError object
     function onError(error) {
-            alert('code: '    + error.code    + '\n' +
-                  'message: ' + error.message + '\n');
+        switch(error.code){
+            case error.TIMEOUT:
+                alert('geolocation timed out.')
+                break;
+            case error.POSITION_UNAVAILABLE:
+                alert('position unavailable');
+                break;
+            case error.PERMISSION_DENIED:
+                alert('permission denied');
+                break;
+            default:
+                alert('geolocation returned an unknown error ' +  error.code);
+        }
+       
     }
+    navigator.geolocation.watchPosition(onSuccess, onError, {
+        enableHighAccuracy: true,
+        maximumAge: 300000,
+        timeout: 300000
+    });
 
     /*Fixes a change in phonegap that forces FB into offline mode when minimized*/
     var ref = new Firebase(firebaseUrl+'/users');
@@ -36,7 +53,6 @@ function onDeviceReady() {
 
     function onResume(){
         Firebase.goOnline();
-        navigator.geolocation.getCurrentPosition(onSuccess, onError);
     } 
 
     angular.bootstrap(document, ["mychat"]);

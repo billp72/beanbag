@@ -239,27 +239,14 @@ angular.module('mychat.controllers', [])
                     });
                     
                 }).then(function(userData){
+                        $scope.modal1.hide();
+                        $scope.modal1.remove();
 
-                    var school = Rooms.checkSchoolExist('gencom');
-                    school.$loaded(function(data){
-                        //if the school doesn't exist already, add it
-                        if(data.length <= 0){
-                            var room = ref.child("schools").child('gencom');
-                            room.set({
-                                icon: "ion-university",
-                                schoolname: 'beanbag',
-                                schoolID: 'gencom',
-                                ID: room.key()
-                            },function(err){
-                                if(err) throw err;
-
-                            })
-                        }
                         $ionicPopup.alert({
                             title: 'Account Created',
-                            template: 'You account has been created successfully.'
+                            template: 'You account has been created successfully. Go login.'
                         });
-                    });
+
                 }).catch(function (error) {
                     alert("Error: " + error);
                     $ionicLoading.hide();

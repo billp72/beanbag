@@ -4,12 +4,12 @@
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "com.mybeanbagapp.beanbag"
-        version   = "1.2.3">
+        version   = "1.2.4">
 
     <name>beanbag</name>
 
     <description>
-       beanbag - connecting the education world.
+       beanbag - connecting the world.
     </description>
 
     <author href="http://phonegap.com" email="support@phonegap.com">
@@ -40,7 +40,7 @@
     <preference name="SplashScreenDelay"          value="3000" />
     <preference name="phonegap-version"           value="cli-5.2.0" />
     <!-- ios overlay not on start up-->
-    <preference name="StatusBarOverlaysWebView" value="false" />
+    <!--<preference name="StatusBarOverlaysWebView" value="false" />-->
     
 
     <!-- Plugins -->
@@ -66,7 +66,7 @@
     <gap:plugin name="cordova-plugin-contacts" source="npm" />
     <gap:plugin name="cordova-plugin-whitelist" source="npm" />
     <!-- ios plugin to hide or change status bar-->
-    <gap:plugin name="cordova-plugin-statusbar" source="npm" />
+    <!--<gap:plugin name="cordova-plugin-statusbar" source="npm" />-->
 
     <!-- Third party plugins -->
     <!-- A list of available plugins are available at https://build.phonegap.com/plugins -->
@@ -109,7 +109,7 @@
     <gap:splash src="res/screen/ios/drawable-land-mdpi.png"      gap:platform="ios"     width="1024" height="768" />
 
     <gap:config-file platform="ios" parent="CFBundleShortVersionString">
-    <string>113</string>
+    <string>114</string>
     </gap:config-file>
 
     <!--

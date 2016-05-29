@@ -1322,7 +1322,7 @@ settings cntrl
             //$scope.lat = Users.getIDS('location').latitude;
             //$scope.lon = Users.getIDS('location').longitude;
             $scope.lat = $scope.location.latitude;
-            $scope.lon = $scope.location.latitude;
+            $scope.lon = $scope.location.longitude;
         }
     });
 

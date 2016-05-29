@@ -511,6 +511,9 @@ angular.module('mychat.services', ['firebase'])
         getUserByID: function(userID){
              return $firebase(ref.child(userID).child('questions')).$asArray();
         },
+        getUserObjByID: function(userID){
+             return $firebase(ref.child(userID)).$asObject();
+        },
         addQuestionToUser: function(params){
             var user = this.getUserByID(params.userID);
             if(!!params.displayName){//adds when one joins

@@ -393,7 +393,7 @@ angular.module('mychat.controllers', [])
                             $rootScope.group       = group;
                             $rootScope.userID      = authData.uid;
                             $rootScope.displayName = val.displayName;
-                            $rootScope.superuser   = !!val.superuser ? val.superuser : null;
+                          
                  
                         //persist data
                             Users.storeIDS(authData.password.profileImageURL, 'avatar');
@@ -1175,6 +1175,8 @@ settings cntrl
 .controller('EventsCtrl', ['$scope', 'Users', 'Rooms', '$state', '$window', 'orderAlphanumeric', '$ionicLoading',
     function ($scope, Users, Rooms, $state, $window, orderAlphanumeric, $ionicLoading) {
 
+     var position = $scope.location;
+
      if(!$scope.userID){
         $scope.userID = Users.getIDS('userID');
     }
@@ -1199,9 +1201,7 @@ settings cntrl
                 });
 
             });
-          
-            $scope.location = Users.getIDS('location');
-
+            position = $scope.location;
         }
     });
 
@@ -1218,6 +1218,7 @@ settings cntrl
         }else{
             val = newValue;
         }
+        position = $scope.location;
 
         $scope.groupID = !!val ? val.groupID : $scope.group.groupID;
         $scope.title1  = !!val ? val.groupName : $scope.group.groupName;
@@ -1226,7 +1227,7 @@ settings cntrl
 
         Users.storeIDS(group, 'group');
     
-        Rooms.getSchoolBySchoolID($scope.schoolID, $scope.groupID, $scope.location.latitude, $scope.location.longitude, function(datap){
+        Rooms.getSchoolBySchoolID($scope.schoolID, $scope.groupID, position.latitude, position.longitude, function(datap){
             if($scope.schoolID === 'gencom'){
                     $scope.rooms = datap;
                     $ionicLoading.hide();
@@ -1318,8 +1319,10 @@ settings cntrl
                 });
 
             });
-            $scope.lat = Users.getIDS('location').latitude;
-            $scope.lon = Users.getIDS('location').longitude;
+            //$scope.lat = Users.getIDS('location').latitude;
+            //$scope.lon = Users.getIDS('location').longitude;
+            $scope.lat = $scope.location.latitude;
+            $scope.lon = $scope.location.latitude;
         }
     });
 

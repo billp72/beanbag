@@ -8,39 +8,8 @@ function onDeviceReady() {
 
         navigator.splashscreen.hide();
 
-    }, 3000);
-    //geolocation callbacks
-    var onSuccess = function(position) {     
-            var location = {
-                    'latitude': position.coords.latitude,
-                    'longitude': position.coords.longitude
-            }
-        window.localStorage.setItem(location, JSON.stringify('location'));        
-    };
-
-    //onError Callback receives a PositionError object
-    function onError(error) {
-        switch(error.code){
-            case error.TIMEOUT:
-                alert('geolocation timed out.')
-                break;
-            case error.POSITION_UNAVAILABLE:
-                alert('position unavailable');
-                break;
-            case error.PERMISSION_DENIED:
-                alert('permission denied');
-                break;
-            default:
-                alert('geolocation returned an unknown error ' +  error.code);
-        }
-       
-    }
-    navigator.geolocation.watchPosition(onSuccess, onError, {
-        enableHighAccuracy: true,
-        maximumAge: 300000,
-        timeout: 300000
-    });
-
+    }, 2000);
+    
     /*Fixes a change in phonegap that forces FB into offline mode when minimized*/
     var ref = new Firebase(firebaseUrl+'/users');
 
@@ -85,6 +54,39 @@ angular.module('mychat', ['ionic', 'ngIOS9UIWebViewPatch', 'firebase', 'angularM
 
     $ionicPlatform.ready(function () {
 
+        //geolocation callbacks
+    var onSuccess = function(position) {     
+            var location = {
+                    'latitude': position.coords.latitude,
+                    'longitude': position.coords.longitude
+            }
+        $rootScope.location = location;
+        //window.localStorage.setItem(location, JSON.stringify('location'));        
+    };
+
+    //onError Callback receives a PositionError object
+    function onError(error) {
+        switch(error.code){
+            case error.TIMEOUT:
+                alert('geolocation timed out.')
+                break;
+            case error.POSITION_UNAVAILABLE:
+                alert('position unavailable');
+                break;
+            case error.PERMISSION_DENIED:
+                alert('permission denied');
+                break;
+            default:
+                alert('geolocation returned an unknown error ' +  error.code);
+        }
+       
+    }
+    navigator.geolocation.watchPosition(onSuccess, onError, {
+        //enableHighAccuracy: true,
+        //maximumAge: 30000,
+        timeout: 300000
+    });
+
         ConnectionCheck.netCallback(function(state){
             if(state){
                 alertPopup = $ionicPopup.alert({
@@ -118,10 +120,9 @@ angular.module('mychat', ['ionic', 'ngIOS9UIWebViewPatch', 'firebase', 'angularM
         $rootScope.email       = null;
         $rootScope.schoolID    = null;
         $rootScope.group       = null;
-        $rootScope.gender      = null;
         $rootScope.userID      = null;
         $rootScope.displayName = null;
-        $rootScope.superuser   = null;
+        
 
         Auth.$onAuth(function (authData) {
             $ionicLoading.hide();
@@ -129,7 +130,17 @@ angular.module('mychat', ['ionic', 'ngIOS9UIWebViewPatch', 'firebase', 'angularM
                 $location.path('/login');
             }else{
                 $timeout(function () {
-                    $state.go('menu.tab.events');
+                    if(!JSON.parse($window.localStorage.getItem('userID'))){
+                         Auth.$unauth();
+                    }else{
+                        
+                        Users.getUserObjByID(authData.uid).$loaded(function(data){
+                           
+                           $rootScope.group = !!data.user.groupID ? {'groupID':data.user.groupID, 'groupName':data.user.groupName} : {'groupID': 'gen', 'groupName':'Whatever'};
+                           $state.go('menu.tab.events');
+                        })
+                    }
+
                 },10);
             }   
         });
